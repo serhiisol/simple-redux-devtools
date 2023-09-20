@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+input {
+  @apply dark:bg-stone-800;
+  @apply w-full h-7 outline-none p-2;
+  @apply border rounded border-neutral-500;
+
+  &.input-dark {
+    @apply text-white;
+    @apply bg-neutral-800;
+  }
+}
+
+button.material-icons:hover {
+  @apply hover:text-neutral-500;
+}
+
+html,
+body,
+#app,
+#portal > div {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  @apply bg-white dark:bg-neutral-800;
+}
+
+#app,
+#portal > div {
+  @apply bg-white dark:bg-neutral-800;
+  @apply dark:text-white;
+}
+
+.grid {
+  @apply h-full;
+
+  display: grid;
+  grid-template-columns: 20rem 1fr;
+  grid-template-rows: 2.5rem 3rem 1fr;
+
+  .header {
+    @apply text-white;
+    @apply bg-neutral-700;
+    @apply px-3;
+
+    align-items: center;
+    display: flex;
+    grid-area: 1 / 1 / 2 / row-end;
+    gap: .5rem
+  }
+
+  .content {
+    overflow: auto;
+    grid-area: 2 / 1 / 4 / row-end;
+  }
+
+  // sidebar
+
+  .header + .header {
+    @apply bg-transparent;
+
+    grid-area: 2 / 1 / 2 / 2;
+    padding: 0 .8rem;
+  }
+
+  .sidebar {
+    grid-area: 3 / 1 / row-end / 2;
+    overflow-y: auto;
+  }
+
+  .sidebar + .content {
+    grid-area: 2 / 2 / column-end / row-end;
+  }
+}
+
+.nav-button {
+  @apply h-full px-2 pb-0.5;
+  @apply hover:bg-neutral-500;
+
+  &.active {
+    @apply border-blue-500 border-b-2;
+    @apply pb-0;
+  }
+}

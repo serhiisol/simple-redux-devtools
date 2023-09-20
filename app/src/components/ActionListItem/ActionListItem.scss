@@ -1,0 +1,13 @@
+.list-item {
+  @apply odd:bg-neutral-100;
+  @apply dark:odd:bg-neutral-700;
+  @apply hover:bg-neutral-200;
+  @apply dark:hover:bg-neutral-600;
+  @apply p-2;
+  @apply cursor-pointer;
+
+  &.selected {
+    @apply bg-sky-200;
+    @apply dark:bg-sky-800;
+  }
+}

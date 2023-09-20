@@ -1,0 +1,45 @@
+{
+  "action": {
+    "default_title": "Simple Redux Devtools"
+  },
+  "background": {
+    "service_worker": "devtools/worker/worker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "devtools/mock.js"
+      ],
+      "matches": [
+        "http://localhost:4200/*"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "all_frames": true,
+      "js": [
+        "devtools/proxy.js"
+      ],
+      "matches": [
+        "http://localhost:4200/*"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "devtools_page": "devtools/panel.html",
+  "host_permissions": [
+    "http://*/",
+    "https://*/"
+  ],
+  "manifest_version": 3,
+  "name": "Simple Redux Devtools",
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "scripting",
+    "notifications"
+  ],
+  "version": "1.0.0"
+}

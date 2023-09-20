@@ -1,0 +1,41 @@
+.tree {
+  .tree-node {
+    .tree-node-header {
+      align-items: center;
+      display: inline-flex;
+      gap: .5rem;
+    }
+
+    .tree-node-key {
+      font-weight: bold;
+    }
+
+    .tree-nested {
+      @apply ml-3 pl-5;
+      @apply border-l border-neutral-500;
+    }
+
+    .brackets {
+      display: inline-block;
+      height: 24px;
+      text-align: center;
+      width: 12px;
+    }
+
+    .string {
+      color: rgb(225, 65, 29);
+    }
+
+    .number {
+      color: rgb(0, 185, 28);
+    }
+
+    .boolean {
+      color: rgb(0, 128, 255);
+    }
+
+    .object {
+      color: rgb(137, 137, 137);
+    }
+  }
+}

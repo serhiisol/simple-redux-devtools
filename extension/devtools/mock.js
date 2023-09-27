@@ -12,11 +12,11 @@
   // Proudly generated :D
   const simpleOptimization = (value, key) => {
     if (value === null) {
-      return 'null';
+      return null;
     }
 
     if (typeof value === 'function') {
-      return 'function';
+      return value.toString();
     }
 
     if (typeof value === 'object') {

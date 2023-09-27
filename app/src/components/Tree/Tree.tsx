@@ -78,7 +78,8 @@ interface TreeViewerProps {
   json: any;
   onClose?: () => void;
   options?: {
-    expandFullscreen: boolean;
+    expandFullscreen?: boolean;
+    onRefresh?: () => void;
   };
 }
 
@@ -90,6 +91,16 @@ export function TreeViewer({ json, isModal, onClose, options }: TreeViewerProps)
     <TreeContext.Provider value={ { expandedAll } }>
       <div className="grid">
         <div className="header">
+          { options?.onRefresh &&
+            <button
+              className="material-icons"
+              onClick={ options.onRefresh }
+              title="Refresh"
+            >
+              refresh
+            </button>
+          }
+
           <button
             className="material-icons"
             onClick={ () => setExpandedAll(true) }

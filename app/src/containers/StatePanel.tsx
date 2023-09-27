@@ -6,13 +6,22 @@ import { events } from '../services/events';
 export function StatePanel() {
   const [lastAction, setLastAction] = useState(null);
 
-  useEffect(() => {
+  function loadLastAction() {
     events.getLast().then(setLastAction);
+  }
+
+  useEffect(() => {
+    loadLastAction();
   }, []);
 
   return (
     <div className="content">
-      <TreeViewer json={ lastAction?.state ?? {} } />
+      <TreeViewer
+        json={ lastAction?.state ?? {} }
+        options={ {
+          onRefresh: loadLastAction,
+        } }
+      />
     </div>
   );
 }

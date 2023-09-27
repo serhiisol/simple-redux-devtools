@@ -11,7 +11,7 @@ interface Message {
 
 class Events {
   private eventsFn: (...args: any[]) => void;
-  private runtime = chrome.runtime ? new Runtime() : new RuntimeMock();
+  private runtime = window.chrome?.runtime ? new Runtime() : new RuntimeMock();
 
   async getLast() {
     const response = await this.runtime.request({

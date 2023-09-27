@@ -43,7 +43,9 @@ export function Header({ onActions, onState, tab }) {
 
       <button
         className="material-icons ml-auto"
-        onClick={ () => reset() }>
+        onClick={ () => reset() }
+        title="Erase Store"
+      >
         delete_forever
       </button>
     </div>

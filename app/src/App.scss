@@ -10,6 +10,7 @@ input {
   @apply dark:bg-stone-800;
   @apply w-full h-7 outline-none p-2;
   @apply border rounded border-neutral-500;
+  @apply text-black dark:text-white;
 
   &.input-dark {
     @apply text-white;

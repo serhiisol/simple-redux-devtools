@@ -8,7 +8,9 @@ export function send(message) {
   if (message.action.type === '@ngrx/effects/init') {
     console.log('Clearing cache...');
 
-    clear();
+    chrome.runtime.sendMessage({
+      type: 'response::reset',
+    });
   }
 
   const storageMessage = {

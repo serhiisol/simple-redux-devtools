@@ -6,7 +6,7 @@ export class RuntimeMock {
     this.interval = setInterval(() => {
       counter++;
       if (counter < 30) {
-        fn({ data: generateActions(1, true)[0] });
+        fn({ data: generateActions(1, true)[0], type: 'message' });
       }
     }, 1000);
   }

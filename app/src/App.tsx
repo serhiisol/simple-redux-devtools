@@ -1,10 +1,9 @@
 import { useState } from 'react';
 
+import './App.scss';
 import { ActionsPanel } from './containers/ActionsPanel';
 import { Header } from './components/Header';
 import { StatePanel } from './containers/StatePanel';
-
-import './App.scss';
 
 function App() {
   const [tab, setTab] = useState('actions');

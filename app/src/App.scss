@@ -18,8 +18,12 @@ input {
   }
 }
 
-button.material-icons:hover {
-  @apply hover:text-neutral-500;
+button.material-icons {
+  @apply text-lg;
+
+  &:hover {
+    @apply hover:text-neutral-500;
+  }
 }
 
 html,
@@ -32,6 +36,7 @@ body,
 
 body {
   @apply bg-white dark:bg-neutral-800;
+  @apply text-xs;
 }
 
 #app,
@@ -45,7 +50,7 @@ body {
 
   display: grid;
   grid-template-columns: 20rem 1fr;
-  grid-template-rows: 2.5rem 3rem 1fr;
+  grid-template-rows: 2.5rem 2.5rem 1fr;
 
   .header {
     @apply text-white;
@@ -55,7 +60,7 @@ body {
     align-items: center;
     display: flex;
     grid-area: 1 / 1 / 2 / row-end;
-    gap: .5rem
+    gap: .5rem;
   }
 
   .content {

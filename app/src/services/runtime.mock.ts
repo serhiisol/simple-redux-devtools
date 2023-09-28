@@ -74,6 +74,7 @@ function generateActions(count: number, simple: boolean) {
           },
           null: null,
           error: new Error('test'),
+          emptyObject: {},
         },
       })
     }))

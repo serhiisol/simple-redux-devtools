@@ -13,15 +13,33 @@ function TreeNode({ label, value }) {
   const isComplex = typeof value === 'object';
   const canExpand = isComplex && Object.keys(value ?? {}).length > 0;
 
+  const valueClassName = value instanceof Error ? 'error' : typeof value;
+
   useEffect(() => {
     setExpanded(expandedAll);
   }, [expandedAll]);
 
   function log() {
     events.sendMessage({
-      type: "request::log",
+      type: 'request::log',
       data: value,
     });
+  }
+
+  function printSimpleValue() {
+    if (value === null) {
+      return String(null);
+    }
+
+    if (value instanceof Error) {
+      return value.toString();
+    }
+
+    if (isComplex) {
+      return '<empty>';
+    }
+
+    return String(value);
   }
 
   return (
@@ -29,7 +47,7 @@ function TreeNode({ label, value }) {
       <div className="tree-node-header">
         { canExpand &&
           <button
-            className="material-icons"
+            className="material-icons text-sm"
             onClick={ () => setExpanded(!expanded) }
             title={ expanded ? "Collapse" : "Expand" }
           >
@@ -40,15 +58,18 @@ function TreeNode({ label, value }) {
         <span className="tree-node-key">{ label }:</span>
 
         { canExpand
-          ? <span className="brackets">...</span>
-          : <span className={ typeof value }>{ isComplex ? '<empty>' : String(value) }</span>
+          ? <span className="material-icons text-sm">
+            { Array.isArray(value) ? 'data_array' : 'data_object' }
+          </span>
+          : <span className={ valueClassName }>{ printSimpleValue() }</span>
         }
+
         <button
-          className="material-icons"
+          className="material-icons text-sm"
           onClick={ log }
           title="Log"
         >
-          code
+          arrow_circle_down
         </button>
       </div>
 
@@ -89,7 +110,7 @@ export function TreeViewer({ json, isModal, onClose, options }: TreeViewerProps)
 
   return (
     <TreeContext.Provider value={ { expandedAll } }>
-      <div className="grid">
+      <div className="grid tree-grid">
         <div className="header">
           { options?.onRefresh &&
             <button

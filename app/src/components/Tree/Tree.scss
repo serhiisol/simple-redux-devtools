@@ -1,9 +1,13 @@
+.tree-grid {
+  grid-template-rows: 2rem 1fr;
+}
+
 .tree {
   .tree-node {
     .tree-node-header {
       align-items: center;
       display: inline-flex;
-      gap: .5rem;
+      gap: .2rem;
     }
 
     .tree-node-key {
@@ -23,19 +27,23 @@
     }
 
     .string {
-      color: rgb(225, 65, 29);
+      color: #C01A16;
     }
 
     .number {
-      color: rgb(0, 185, 28);
+      color: #28C016;
     }
 
     .boolean {
-      color: rgb(0, 128, 255);
+      color: #1681C0;
     }
 
     .object {
       color: rgb(137, 137, 137);
+    }
+
+    .error {
+      color: #E65722;
     }
   }
 }

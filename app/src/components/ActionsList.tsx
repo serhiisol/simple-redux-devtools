@@ -10,12 +10,12 @@ export function ActionsList() {
   const [filter, setFilter] = useState('');
 
   const maxLimitRef = useRef(maxLimit);
+  const actionsRef = useRef(actions);
   const scroll = useRef<HTMLDivElement>();
 
   const filteredActions = filter ? actions.filter(({ action }) =>
     action.type.toLowerCase().includes(filter)
   ) : actions;
-  const actionsRef = useRef(filteredActions);
 
   useEffect(() => {
     maxLimitRef.current = maxLimit;

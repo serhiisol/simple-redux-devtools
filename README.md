@@ -1,6 +1,6 @@
 # Simple Redux Devtools
 
-A very lightweight chrome extension to debug redux applications.
+A very lightweight chrome/edge extension to debug redux applications.
 Main advantage of the extension is limited memory usage and on-demand json rendering.
 
 <img src="devtools.png" />
@@ -19,6 +19,8 @@ $> npm run build
 ```
 
 To add extension to the Chrome:
-1. Open chrome://extensions
-2. Click `Load unpacked`
-3. Navigate to the `extension` folder in the root folder of the repository
+1. Open `chrome://extensions` or `edge://extensions`
+2. Enable `Developer mode`
+3. Click `Load unpacked`
+4. Navigate to the `extension` folder in the root folder of the repository
+5. Enjoy :D

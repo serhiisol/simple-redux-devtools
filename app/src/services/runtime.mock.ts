@@ -44,6 +44,7 @@ function generateActions(count: number, simple: boolean) {
   return [
     ...Array(count).fill(null).map((_, index) => ({
       action: {
+        actionData: { hello: 'world' },
         timestamp: Date.now() + index,
         type: generateRandomString(20),
       },

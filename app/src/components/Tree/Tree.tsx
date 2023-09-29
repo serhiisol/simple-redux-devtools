@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 
 import { events } from '../../services/events';
 import { Modal } from '../Modal';
+import { Empty } from '../Empty';
 import './Tree.scss';
 
 const TreeContext = createContext(null);
@@ -10,10 +11,11 @@ function TreeNode({ label, value }) {
   const { expandedAll } = useContext(TreeContext);
   const [expanded, setExpanded] = useState(false);
 
-  const isComplex = typeof value === 'object';
-  const canExpand = isComplex && Object.keys(value ?? {}).length > 0;
+  const isComplex = typeof value === 'object' && value !== null && !(value instanceof Error);
+  const length = isComplex ? Object.keys(value).length : 0;
+  const canExpand = isComplex && length > 0;
 
-  const valueClassName = value instanceof Error ? 'error' : typeof value;
+  const className = value instanceof Error ? 'error' : typeof value;
 
   useEffect(() => {
     setExpanded(expandedAll);
@@ -26,28 +28,12 @@ function TreeNode({ label, value }) {
     });
   }
 
-  function printSimpleValue() {
-    if (value === null) {
-      return String(null);
-    }
-
-    if (value instanceof Error) {
-      return value.toString();
-    }
-
-    if (isComplex) {
-      return '<empty>';
-    }
-
-    return String(value);
-  }
-
   return (
     <li className="tree-node">
       <div className="tree-node-header">
         { canExpand &&
           <button
-            className="material-icons text-sm"
+            className="material-icons tree-node-expand"
             onClick={ () => setExpanded(!expanded) }
             title={ expanded ? "Collapse" : "Expand" }
           >
@@ -57,15 +43,13 @@ function TreeNode({ label, value }) {
 
         <span className="tree-node-key">{ label }:</span>
 
-        { canExpand
-          ? <span className="material-icons text-sm">
-            { Array.isArray(value) ? 'data_array' : 'data_object' }
-          </span>
-          : <span className={ valueClassName }>{ printSimpleValue() }</span>
+        { isComplex
+          ? <span className="text-xs">{ Array.isArray(value) ? `[${length}]` : `{${length}}` }</span>
+          : <span className={ className }>{ String(value) }</span>
         }
 
         <button
-          className="material-icons text-sm"
+          className="material-icons"
           onClick={ log }
           title="Log"
         >
@@ -107,52 +91,57 @@ interface TreeViewerProps {
 export function TreeViewer({ json, isModal, onClose, options }: TreeViewerProps) {
   const [expandedAll, setExpandedAll] = useState(false);
   const [modalShown, setModalShown] = useState(false);
+  const hasData = Object.keys(json ?? {}).length > 0;
 
   return (
     <TreeContext.Provider value={ { expandedAll } }>
-      <div className="grid tree-grid">
-        <div className="header">
-          { options?.onRefresh &&
+      { hasData &&
+        <div className="grid tree-grid">
+          <div className="header">
+            { options?.onRefresh &&
+              <button
+                className="material-icons"
+                onClick={ options.onRefresh }
+                title="Refresh"
+              >
+                refresh
+              </button>
+            }
+
             <button
               className="material-icons"
-              onClick={ options.onRefresh }
-              title="Refresh"
+              onClick={ () => setExpandedAll(true) }
+              title="Expand All"
             >
-              refresh
+              unfold_more
             </button>
-          }
 
-          <button
-            className="material-icons"
-            onClick={ () => setExpandedAll(true) }
-            title="Expand All"
-          >
-            unfold_more
-          </button>
-
-          <button
-            className="material-icons"
-            onClick={ () => setExpandedAll(false) }
-            title="Collapse All"
-          >
-            unfold_less
-          </button>
-
-          { options?.expandFullscreen &&
             <button
-              className="material-icons ml-auto"
-              onClick={ () => isModal ? onClose() : setModalShown(true) }
-              title={ isModal ? "Close Fullscreen" : "Open Fullscreen" }
+              className="material-icons"
+              onClick={ () => setExpandedAll(false) }
+              title="Collapse All"
             >
-              { isModal ? 'close_fullscreen' : 'open_in_full' }
+              unfold_less
             </button>
-          }
-        </div>
 
-        <div className="content p-2">
-          <Tree json={ json } />
+            { options?.expandFullscreen &&
+              <button
+                className="material-icons ml-auto"
+                onClick={ () => isModal ? onClose() : setModalShown(true) }
+                title={ isModal ? "Close Fullscreen" : "Open Fullscreen" }
+              >
+                { isModal ? 'close_fullscreen' : 'open_in_full' }
+              </button>
+            }
+          </div>
+
+          <div className="content p-2">
+            <Tree json={ json } />
+          </div>
         </div>
-      </div>
+      }
+
+      { !hasData && <Empty /> }
 
       { modalShown && <Modal>
         <TreeViewer

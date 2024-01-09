@@ -19,6 +19,14 @@
       return value.toString();
     }
 
+    if (value instanceof Error) {
+      return {
+        isError: true,
+        message: value.message,
+        stack: value.stack.split('\n'),
+      };
+    }
+
     if (typeof value === 'object') {
       if (Array.isArray(value)) {
         const clone = [...value];

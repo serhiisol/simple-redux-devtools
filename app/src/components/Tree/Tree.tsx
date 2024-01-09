@@ -10,6 +10,14 @@ const TreeContext = createContext(null);
 function TreeNode({ label, value }) {
   const { expandedAll } = useContext(TreeContext);
   const [expanded, setExpanded] = useState(false);
+  const originalValue = value;
+
+  if (value?.isError) {
+    const error = new Error(value.message);
+
+    error.stack = value.stack.join('\n');
+    value = error;
+  }
 
   const isComplex = typeof value === 'object' && value !== null && !(value instanceof Error);
   const length = isComplex ? Object.keys(value).length : 0;
@@ -24,7 +32,7 @@ function TreeNode({ label, value }) {
   function log() {
     events.sendMessage({
       type: 'request::log',
-      data: value,
+      data: originalValue,
     });
   }
 
